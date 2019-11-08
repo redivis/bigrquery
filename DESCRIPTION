@@ -2,8 +2,7 @@ Package: redivis.bigrquery
 Title: Redivis wrapper around bigrquery packaged
 Version: 0.0.1
 Authors@R: c(
-    person("Redivis", "Inc", email = "support@redivis.com", role = c("aut", "cre"))
-)
+    person("Redivis", "Inc", email = "support@redivis.com", role = c("aut", "cre")))
 Description: Easily talk to Google's 'BigQuery' database from R.
 License: GPL-3
 URL: https://github.com/redivis/bigrquery
