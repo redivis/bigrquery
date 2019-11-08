@@ -76,7 +76,7 @@ setClass("BigQueryDriver", contains = "DBIDriver")
 #' @export
 setMethod(
   "dbConnect", "BigQueryDriver",
-  function(drv, project, dataset = NULL, billing = project,
+  function(drv, project = '_', dataset = NULL, billing = project,
            page_size = 1e4,
            quiet = NA,
            use_legacy_sql = FALSE,

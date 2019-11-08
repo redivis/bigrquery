@@ -2,7 +2,7 @@
 NULL
 
 BigQueryConnection <-
-  function(project, dataset, billing,
+  function(project = '_', dataset = NULL, billing = NULL,
            page_size = 1e4,
            quiet = NA,
            use_legacy_sql = FALSE,
@@ -326,4 +326,3 @@ as_bq_table.BigQueryConnection <- function(x, name, ...) {
     bq_table(pieces[[1]], pieces[[2]], pieces[[3]])
   )
 }
-
