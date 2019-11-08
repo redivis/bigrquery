@@ -1,19 +1,13 @@
-Package: bigrquery
-Title: An Interface to Google's 'BigQuery' 'API'
-Version: 1.2.0.9000
+Package: redivis.bigrquery
+Title: Redivis wrapper around bigrquery packaged
+Version: 0.0.1
 Authors@R: c(
-    person("Hadley", "Wickham", , "hadley@rstudio.com", c("aut", "cre"),
-      comment = c(ORCID = "0000-0003-4757-117X")),
-    person("Jennifer", "Bryan", , "jenny@rstudio.com", "aut",
-      comment = c(ORCID = "0000-0002-6983-2759")),
-    person("Kungliga Tekniska Högskolan", role = "ctb", comment = "strptime implementation"),
-    person("The NetBSD Foundation, Inc.", role = "ctb", comment = "gmtime implementation"),
-    person("RStudio", role = c("cph", "fnd"))
-    )
+    person("Redivis", "Inc", email = "support@redivis.com", role = c("aut", "cre"))
+)
 Description: Easily talk to Google's 'BigQuery' database from R.
 License: GPL-3
-URL: https://github.com/rstats-db/bigrquery
-BugReports: https://github.com/rstats-db/bigrquery/issues
+URL: https://github.com/redivis/bigrquery
+BugReports: https://github.com/redivis/bigrquery/issues
 Depends:
     R (>= 3.2)
 Imports:
