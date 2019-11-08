@@ -1,5 +1,7 @@
-base_url <- "https://www.googleapis.com/bigquery/v2/"
+base_url <- if (Sys.getenv("REDIVIS_API_ENDPOINT") == "") "https://redivis.com/api/v1/bigquery/v2/" else Sys.getenv("REDIVIS_API_ENDPOINT")
 upload_url <- "https://www.googleapis.com/upload/bigquery/v2/"
+
+print(base_url)
 
 prepare_bq_query <- function(query) {
   api_key <- Sys.getenv("BIGRQUERY_API_KEY")
@@ -119,7 +121,6 @@ bq_delete <- function(url, ..., query = NULL, token = bq_token()) {
 #' @importFrom httr POST add_headers config
 bq_post <- function(url, body, ..., query = NULL, token = bq_token()) {
   json <- jsonlite::toJSON(body, pretty = TRUE, auto_unbox = TRUE)
-
   req <- POST(
     paste0(base_url, url),
     body = json,
@@ -246,4 +247,3 @@ random_boundary <- function() {
   #  ":", "?")
   paste0(sample(valid, 50, replace = TRUE), collapse = "")
 }
-

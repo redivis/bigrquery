@@ -14,7 +14,6 @@ gargle_lookup_table <- list(
   API         = "BigQuery API",
   PREFIX      = "bq"
 )
-
 #' Authorize bigrquery
 #'
 #' @eval gargle:::PREFIX_auth_description(gargle_lookup_table)
@@ -110,10 +109,11 @@ bq_deauth <- function() {
 #' bq_token()
 #' }
 bq_token <- function() {
-  if (!bq_has_token()) {
-    bq_auth()
+  if(Sys.getenv("REDIVIS_API_TOKEN") == ""){
+      stop('The environement variable "REDIVIS_API_TOKEN must be set"')
+  } else {
+    httr::set_config(add_headers("Authorization" = paste("Bearer", Sys.getenv("REDIVIS_API_TOKEN"), collapse = " ")))
   }
-  httr::config(token = .auth$cred)
 }
 
 #' Is there a token on hand?

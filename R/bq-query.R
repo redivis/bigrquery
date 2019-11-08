@@ -43,10 +43,15 @@ NULL
 
 #' @export
 #' @rdname bq_query
-bq_project_query <- function(x, query,
+bq_project_query <- function(x, query = NULL,
                              destination_table = NULL,
                              ...,
                              quiet = NA) {
+
+  if (is.null(query)){
+    query <- x
+    x <- "_"
+  }
   job <- bq_perform_query(
     query,
     billing = x,
