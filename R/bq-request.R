@@ -28,7 +28,7 @@ bq_path <- function(project, dataset = NULL, table = NULL, ...) {
 
 bq_ua <- function() {
   paste0(
-    "bigrquery/", utils::packageVersion("bigrquery"), " ",
+    "bigrquery/", utils::packageVersion("redivis.bigrquery"), " ",
     "(GPN:RStudio; )", " ",
     "gargle/", utils::packageVersion("gargle"), " ",
     "httr/", utils::packageVersion("httr")
@@ -119,6 +119,8 @@ bq_delete <- function(url, ..., query = NULL, token = bq_token()) {
 #' @importFrom httr POST add_headers config
 bq_post <- function(url, body, ..., query = NULL, token = bq_token()) {
   json <- jsonlite::toJSON(body, pretty = TRUE, auto_unbox = TRUE)
+
+  a <- bq_ua()
   req <- POST(
     paste0(base_url, url),
     body = json,
@@ -128,6 +130,7 @@ bq_post <- function(url, body, ..., query = NULL, token = bq_token()) {
     ...,
     query = prepare_bq_query(query)
   )
+
   invisible(process_request(req))
 }
 
