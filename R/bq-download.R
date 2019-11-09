@@ -149,6 +149,10 @@ bq_download_pages <- function(x, page_info, max_connections = 6L, quiet = NA) {
     quiet = quiet
   )
 
+  onFail <- function(err){
+    stop(err)
+  }
+
   for (i in seq_len(n_pages)) {
     handle <- bq_download_page_handle(
       x,
@@ -157,6 +161,7 @@ bq_download_pages <- function(x, page_info, max_connections = 6L, quiet = NA) {
     )
     curl::multi_add(handle,
       done = bq_download_callback(i, paths[[i]], progress),
+      fail = onFail,
       pool = pool
     )
   }
@@ -198,18 +203,18 @@ bq_download_page_handle <- function(x, begin = 0L, end = begin + 1e4) {
   url <- paste0(base_url, bq_path(x$project, dataset = x$dataset, table = x$table, data = ""))
   url <- httr::modify_url(url, query = prepare_bq_query(query))
 
-  if (bq_has_token()) {
-    token <- .auth$get_cred()
-    signed <- token$sign("GET", url)
-    url <- signed$url
-    headers <- signed$headers
-  } else {
-    headers <- list()
-  }
 
   h <- curl::new_handle(url = url)
-  curl::handle_setopt(h, useragent = bq_ua())
-  curl::handle_setheaders(h, .list = headers)
+
+  if(Sys.getenv("REDIVIS_API_TOKEN") == ""){
+      stop('The environement variable "REDIVIS_API_TOKEN must be set"')
+  } else {
+    curl::handle_setheaders(h, .list = list(Authorization = paste("Bearer", Sys.getenv("REDIVIS_API_TOKEN"), collapse = " ")))
+  }
+
+  if (startsWith(Sys.getenv("REDIVIS_API_ENDPOINT"), "https://localhost")){
+    curl::handle_setopt(h, ssl_verifypeer = FALSE)
+  }
 
   h
 }
