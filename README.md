@@ -23,6 +23,19 @@ Install from GitHub:
 devtools::install_github("redivis/bigrquery")
 ```
 
+### Authentication
+
+The `REDIVIS_API_TOKEN` environment variable must be set to your Redivis
+API token, and the token must have `data.data` scope. Go to your
+[workspace/settings](https://redivis.com/workspace/settings) to create
+an API token. For example:
+
+``` bash
+REDIVIS_API_TOKEN=your_api_token Rscript [your_script.R]
+# or, within R
+Sys.setenv(REDIVIS_API_TOKEN = "your_api_token")
+```
+
 ### [bigrquery](https://github.com/r-dbi/bigrquery)
 
 The bigrquery package makes it easy to work with data stored in [Google
@@ -182,19 +195,6 @@ SELECT [] FROM medicare_public_example:1008.high_cost_in_providers_in_CA_output
 # or 
 SELECT [] FROM high_cost_in_providers_in_CA_output:9443
 ```
-
-## Important details
-
-### Authentication and authorization
-
-The `REDIVIS_API_TOKEN` environment variable must be set to your Redivis
-API token, and the token must have `data.data` scope. Go to your
-[workspace/settings](https://redivis.com/workspace/settings) to create
-an API token. For example:
-
-    REDIVIS_API_TOKEN=your_api_token R ...
-    # or
-    Sys.setenv(REDIVIS_API_TOKEN = "your_api_token")
 
 ## Useful links
 
