@@ -67,7 +67,7 @@ of abstraction on top of BigQuery:
 
 ``` r
 library(redivis.bigrquery)
-sql <- "SELECT * FROM `stanfordphs.commuting_zone_life_expectancy_trends.v1_0` LIMIT 10"
+sql <- "SELECT * FROM `stanfordphs.commuting_zone:v1_0.life_expectancy_trends` LIMIT 10"
 
 tb <- bq_project_query(sql)
 bq_table_download(tb, max_results = 10)
@@ -79,7 +79,7 @@ bq_table_download(tb, max_results = 10)
 library(DBI)
 
 con <- dbConnect(redivis.bigrquery::bigquery())
-sql <- "SELECT * FROM `stanfordphs.commuting_zone_life_expectancy_trends.v1_0` LIMIT 10"
+sql <- "SELECT * FROM `stanfordphs.commuting_zone:v1_0.life_expectancy_trends` LIMIT 10"
 
 dbGetQuery(con, sql, n = 10)
 ```
@@ -140,47 +140,47 @@ required.
 
 ### Examples
 
-We can reference the 1940 households table from the [IPUMS](https://redivis.com/StanfordPHS/datasets/152) dataset as:
+We can reference the households table from the [IPUMS 1940](https://redivis.com/StanfordPHS/datasets/1415) dataset as:
 
 ``` sql
-SELECT [] FROM `stanfordphs.IPUMS.1940 Households` 
+SELECT [] FROM `stanfordphs.IPUMS_1940.Households` 
 ```
 
 We can reference without backticks if we escape non-word characters.
 Note that references are case-insensitive.
 
 ``` sql
-SELECT [] FROM stanfordphs.ipums.1940_households
+SELECT [] FROM stanfordphs.ipums_1940.households
 ```
 
 By default this uses the latest (2.0) version of the dataset. If we want
 to work with version 1.0:
 
 ``` sql
-SELECT [] FROM stanfordphs.ipums:v1_0.1940_households
+SELECT [] FROM stanfordphs.ipums_1940:v1_0.households
 ```
 
 If we want to work with the 1% sample:
 
 ``` sql
 # The order of the suffixes does not matter
-SELECT [] FROM stanfordphs.ipums:v1_0:sample.1940_households
+SELECT [] FROM stanfordphs.ipums_1940:v1_0:sample.households
 ```
 
 Finally, we can provide persistent ids to prevent our reference from
 breaking if a dataset or table is renamed:
 
 ``` sql
-SELECT [] FROM stanfordphs.ipums:152:v1_0:sample.1940_households
+SELECT [] FROM stanfordphs.ipums_1940:152:v1_0:sample.households
 
 # We don't actually need the owner if an id is provided
-SELECT [] FROM ipums:152:v1_0:sample.1940_households
+SELECT [] FROM ipums_1940:152:v1_0:sample.households
 
 # Can also provide a table id
-SELECT [] FROM ipums:152.1940_households:178
+SELECT [] FROM ipums_1940:152.households:178
 
 # Don't need the dataset name if tableId is provided
-SELECT [] FROM 1940_households:178
+SELECT [] FROM households:178
 
 # Or even the table name
 SELECT [] FROM :178
